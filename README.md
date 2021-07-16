@@ -4,9 +4,11 @@
 </hr>
 <h3>Link da aplicação</h3>
 <a href="https://agendainfo2.herokuapp.com/">Clique aqui!</a></br>
+<hr/>
  <img alt="Qries" src="https://user-images.githubusercontent.com/37186843/125954916-6f8df989-0466-4c47-a1e4-760dbbf9f71b.PNG"
          width=850" >
  <p align="justify"> Hoje percebo como evolui nos códigos :rofl: Mas ainda roda firme e forte!:yellow_heart:</p>
+ <hr/>
  <h3>para  rodar o projeto no window</h3>
 <p align="justify">  git clone Link da app</p>
 <p align="justify">cd credito</p>
