@@ -3,7 +3,7 @@
 <p>Trata se de uma agenda para reservar equipamentos diversos como tv, som, data show, salas de informática, biblioteca etc...</p>
  <img alt="Qries" src="https://user-images.githubusercontent.com/37186843/125954916-6f8df989-0466-4c47-a1e4-760dbbf9f71b.PNG"
          width=850" >
- 
+ <p align="justify"> Hoje percebo como evolui nos códigos :rofl:</p>
  <h3>para  rodar o projeto no window</h3>
 <p align="justify">  git clone https://github.com/JorgeLuizAngioleti/credito.git</p>
 <p align="justify">cd credito</p>
