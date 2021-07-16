@@ -8,7 +8,7 @@
          width=850" >
  <p align="justify"> Hoje percebo como evolui nos códigos :rofl: Mas ainda roda firme e forte!:yellow_heart:</p>
  <h3>para  rodar o projeto no window</h3>
-<p align="justify">  git clone https://github.com/JorgeLuizAngioleti/credito.git</p>
+<p align="justify">  git clone Link da app</p>
 <p align="justify">cd credito</p>
 <p align="justify">python -m venv venv</p>
 <p align="justify">venv/Scripts/activate</p>
