@@ -1,6 +1,9 @@
 # Agenda
 <p>Agenda de controle de tecnologias utilizado nas escolas múnicipais, este foi meu primeiro projeto em Django</p>
 <p>Trata se de uma agenda para reservar equipamentos diversos como tv, som, data show, salas de informática, biblioteca etc...</p>
+</hr>
+<h3>Link da aplicação</h3>
+<a href="url">https://agendainfo2.herokuapp.com/</a>
  <img alt="Qries" src="https://user-images.githubusercontent.com/37186843/125954916-6f8df989-0466-4c47-a1e4-760dbbf9f71b.PNG"
          width=850" >
  <p align="justify"> Hoje percebo como evolui nos códigos :rofl: Mas ainda roda firme e forte!:yellow_heart:</p>
