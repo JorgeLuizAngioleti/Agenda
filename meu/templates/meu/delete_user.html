@@ -1,0 +1,14 @@
+{% extends 'meu/base.html' %}
+{% block title %} Deletar {% endblock%}
+
+{% block main  %}
+
+<h1>Tem certeza que deseja deletar: {{pessoa}}!</h1>
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	<button type="submit" class="btn btn-danger">Deletar</button>
+</form>
+
+
+{% endblock %}

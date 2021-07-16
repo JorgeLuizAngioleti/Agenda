@@ -1,0 +1,26 @@
+{% extends 'meu/base.html' %}
+{% block title %} tudo {% endblock%}
+
+{% block main  %}
+{% if user.is_authenticated  %}<!-- if 1-->
+<h4>Olá {{ user.username }}! selecione uma data e uma tecnologia.</h4>
+<h4>Escola: {{request.user.last_name}}</h4>
+<h1>Pesquisa</h1>
+<form action="{% url 'home' %}">
+	<h3>Data:</h3>
+<input type="date" value="{{data}}" name="data"  class="form-control" required>
+<h3>Tecnologia:</h3>
+<select name="tecnologia" class="form-control"  required>
+	{% for n in nomes %}
+	<option value="{{n.nome}}">{{n.nome}}</option>{% endfor %}</select><br>
+<input type="submit" value="Pesquisar" class="btn btn-success">
+</form>
+{%endif%}
+{% endblock%}
+{% block footer %}
+<div class="card-footer text-muted" >
+    <footer><center>
+          <p>Desenvolvido por: Jorge Luiz Angioleti&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;contato: jorgescorpionsound@hotmail.com</p>
+    </center></footer>
+</div>
+{% endblock %}

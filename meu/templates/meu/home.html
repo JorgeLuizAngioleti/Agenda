@@ -1,0 +1,311 @@
+{% extends 'meu/base.html' %}
+{% block title %} Home {% endblock%}
+{% load widget_tweaks %}
+{% block main  %}
+<script type = "text/javascript">
+$(function() {
+  $('#datetimepicker').datetimepicker({
+  defaultDate: "{{data}}",
+  locale: 'pt-br',
+    inline: true,
+    sideBySide: false
+
+  });
+  $('#datetimepicker').on('dp.change', function(event) {
+    $('#selected-date').text(event.date);
+    var formatted_date = event.date.format('YYYY-MM-DD');
+    $('#my_hidden_input').val(formatted_date);
+    $('#hidden-val').text($('#my_hidden_input').val());
+   ir();
+  });
+});
+function ir() {
+        document.formulario.submit();
+
+}
+
+
+</script>
+
+{% if user.is_authenticated  %}<!-- if 1-->
+<h3>Bem-vindo:  {{ user.username }}!&ensp;&ensp;&ensp;&ensp;Hoje é: {{hj}}&ensp;&ensp;&ensp;&ensp;Escola: {{request.user.last_name}}</h3>
+{%if evento  and  user.is_superuser %}
+<a href="{% url 'mensagem' %}" style="color:#FF0000;"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Você tem evento!</a>
+{% endif %}
+<form action="{% url 'home' %}" name="formulario" >
+<label for="">Tecnologia:</label>
+	<select name="tecnologia"  class="form-control"onchange='ir()'>
+			<option  value="{{tecnologia}}" selected>{{tecnologia}}</option>
+			{% for n in nomes %}
+			<option value="{{n.nome}}">{{n.nome}}</option>
+			{% endfor %}
+	</select>
+  <br/>
+<div  class="col-lg-8 datepicker_area" >
+
+          <div id="datetimepicker" data-date="12/03/2012"><label for="">Data:<label></div>
+          <input type="hidden" name="data" id="my_hidden_input" value="" >
+</div>
+
+
+	<img src="https://res.cloudinary.com/doioofphr/image/upload/v1556737932/logo.png" width="320" height="320" alt="">
+	<br><br>
+	<a href="{%url 'agenda_form' data tecnologia %}" class="btn btn-primary btn-lg">Agendar</a>
+</form>
+
+
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %}
+		class="{{ message.tags }}"
+		{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+</div>
+{% endif %}
+{%if dados%}
+<h3><center>Tecnologia selecionada: {{tecnologia}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Data:{{x|date:"d-M-Y"}}</center></h3>
+{%else%}
+<h3><center>Tecnologia selecionada: {{tecnologia}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Data:{{x|date:"d-M-Y"}}</center></h3>
+<div class="alert alert-info" role="alert">
+<center>Nenhuma agenda para está data, clique em Agendar!</center>
+</div>
+{%endif%}
+
+{% for d in dados %}
+{% if d.escola == request.user.last_name %}
+
+
+{%if d.aula == 'am'%}
+<table class="table" border="2">
+		<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">1ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+		</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'bm' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">2ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+   <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'cm' %}
+<table class="table" border="2">
+
+
+	<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">3ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+{%elif d.aula == 'dm' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">4ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'em' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">5ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'fm' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#C0C0C0" width="300">6ª aula matutino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+{%elif d.aula == 'gv'%}
+<table class="table" border="2">
+
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">1ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'hv' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">2ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{%endif%}
+
+{%elif d.aula == 'iv' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">3ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+   <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{% endif %}
+
+{%elif d.aula == 'jv' %}
+<table class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">4ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{% endif %}
+
+{%elif d.aula == 'lv' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">5ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia%}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+			</tr>
+</table>
+{% endif %}
+
+{%elif d.aula == 'mv' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#ADD8E6" width="300">6ª aula vespertino</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+{%elif d.aula == 'nn' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#FFCC00" width="300">1ª aula noturno</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+{%elif d.aula == 'on' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor=#FFCC00" width="300">2ª aula noturno</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+{%elif d.aula == 'pn' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#FFCC00" width="300">3ª aula noturno</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+{%elif d.aula == 'qn' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#FFCC00" width="300">4ª aula noturno</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+{%elif d.aula == 'rn' %}
+<table  class="table" border="2">
+
+	<tr>
+		<td align="center"  bgcolor="#FFCC00" width="300">5ª aula noturno</td>
+		<td>{{d.nome}}</td>
+{%if  d.nome ==  user.username or user.is_superuser %}
+    <td align="center"  bgcolor="#8FBC8F" width="30"><a href="{% url 'atualizar_dados' d.id data tecnologia %}"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+    <td  align="center" bgcolor="#FFC0CB" width="30"><a href="{% url 'agenda_delete' d.id data tecnologia%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+			</tr>
+</table>
+{% endif %}
+
+{%endif%}
+{%endif%}
+{% endfor %}
+
+{%else%}
+<h1>Você não está logado!</h1>
+{% endif %}<!-- if 1-->
+{% endblock %}

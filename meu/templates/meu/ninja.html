@@ -1,0 +1,133 @@
+{% extends 'meu/base.html' %}
+{% block title %} Ninja {% endblock%}
+
+{% block main  %}
+
+{% load widget_tweaks %}
+
+{% if user.is_superuser  and  per_n %}
+	{% if messages %}
+<div class='btn btn-success' role="alert">
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %}
+		class="{{ message.tags }}"
+		{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+</div>
+{% endif %}
+	<h2>Agenda Ninja:</h2>
+<h4 style="color: red">Atenção: Caso já tenha algumas aulas já agendadas nestes dias e semana, a mesma será subistituida e atualizada.</h4>
+<form action="" method="POST" enctype="multipart/form-data">
+	{%csrf_token%}
+<div class="form-group">
+		<label for="{{form.nome.id_for_label}}">Nome do professor</label>
+		{{form.nome|add_class:"form-control"}}
+</div>
+
+<div class="form-group">
+		<label for="{{form.escola.id_for_label}}">Escola</label>
+		{{form.escola|add_class:"form-control"|attr:'readonly'}}
+	</div>
+<label for="">Tecnologia:</label>
+	<select name="tecnologia"  class="form-control">
+			<option  value="{{tecnologia}}" selected>{{tecnologia}}</option>
+			{% for n in nomes %}
+			<option value="{{n.nome}}">{{n.nome}}</option>
+			{% endfor %}
+	</select>
+  <br/>
+<div class="form-group">
+
+<label for="{{form.aula.id_for_label}}">Aula</label>
+<select name="aula" required id="id_aula" class="form-control">
+  <option value="" selected>---------</option>
+
+  <optgroup label="Matutino">
+  <option value="am">1ª aula matutino</option>
+
+  <option value="bm">2ª aula matutino</option>
+
+  <option value="cm">3ª aula matutino</option>
+
+  <option value="dm">4ª aula matutino</option>
+
+  <option value="em">5ª aula matutino</option>
+
+  <option value="fm">6ª aula matutino</option>
+
+
+  </optgroup>
+  <optgroup label="Vespertino">
+  <option value="gv">1ª aula vespertino</option>
+
+  <option value="hv">2ª aula vespertino</option>
+
+  <option value="iv">3ª aula vespertino</option>
+
+  <option value="jv">4ª aula vespertino</option>
+
+  <option value="lv">5ª aula vespertino</option>
+
+  <option value="mv">6ª aula vespertino</option>
+
+  </optgroup>
+  <optgroup label="Noturno">
+  <option value="nn">1ª aula noturno</option>
+
+  <option value="on">2ª aula noturno</option>
+
+  <option value="pn">3ª aula noturno</option>
+
+  <option value="qn">4ª aula noturno</option>
+
+  <option value="rn">5ª aula noturno</option>
+
+  </optgroup>
+</select>
+</div>
+
+<div class="form-group">
+
+<label for="{{form.semana.id_for_label}}">Dia da semana</label>
+<select name="semana" required id="id_semana" class="form-control">
+  <option value="" selected>---------</option>
+
+  <optgroup label="Escolha abaixo">
+	  diasemana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado','Domingo'
+  <option value="Segunda-feira">Segunda-feira</option>
+
+  <option value="Terça-feira">Terça-feira</option>
+
+  <option value="Quarta-feira">Quarta-feira</option>
+
+  <option value="Quinta-feira">Quinta-feira</option>
+
+  <option value="Sexta-feira">Sexta-feira</option>
+
+  <option value="Sábado">Sábado</option>
+
+  <option value="Domingo">Domingo</option>
+  </optgroup>
+</select>
+</div>
+
+<div class="form-group">
+		<label for="{{form.tema.id_for_label}}">Tema</label>
+		{{form.tema|add_class:"form-control"}}
+</div>
+
+<div class="form-group">
+		<label for="{{form.objetivo.id_for_label}}">Objetivo</label>
+		{{form.objetivo|add_class:"form-control"}}
+</div>
+	<button type="submit" class="btn btn-success">Criar aulas fixas</button>
+</form>
+
+{%else%}
+<h1>Você não tem permição para acessar esta página!</h1>
+{% endif %}
+<a  class="btn btn-primary" href="{%url 'home' %}">Voltar a pesquisa</a>
+<a href="{%url 'admin_sistema' %}" class="btn btn-primary" >Voltar ao admin</a>
+{% endblock %}

@@ -1,0 +1,7 @@
+*.idea
+*.sqlite
+*.pyc
+novo
+.DS_Stone
+media
+.env

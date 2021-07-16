@@ -1,0 +1,25 @@
+{% extends 'meu/base.html' %}
+{% block title %} tudo {% endblock%}
+
+{% block main  %}
+{% if user.is_authenticated and  user.is_superuser  %}<!-- if 1-->
+<h4>Olá {{ user.username }}! </h4>
+<h1>Admimistração do sistema</h1>
+<a href="{%url 'add_user' %}" class="btn btn-info" >Cadastrar professor</a>
+<a href="{%url 'add_tec' %}" class="btn btn-info" >Cadastrar Tecnologia</a>
+<a href="{%url 'dias' %}" class="btn btn-info" >Cadastrar dias de antecedência e permição</a>
+<a href="{%url 'mensagem' %}" class="btn btn-info" >Eventos</a>
+<a href="{%url 'add_ninja' %}" class="btn btn-info" >Criar aulas fixas</a>
+
+{% else %}
+<h2>Você não tem autorização para acessar esta página</h2>
+{%endif%}
+<a  class="btn btn-primary" href="{%url 'home' %}">Voltar a pesquisa</a>
+{% endblock%}
+{% block footer %}
+<div class="card-footer text-muted" >
+    <footer><center>
+          <p>Desenvolvido por: Jorge Luiz Angioleti&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;contato: jorgescorpionsound@hotmail.com</p>
+    </center></footer>
+</div>
+{% endblock %}

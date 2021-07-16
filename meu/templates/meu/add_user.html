@@ -1,0 +1,51 @@
+{% extends 'meu/base.html' %}
+{% block title %} Form_add_user {% endblock%}
+
+{% block main  %}
+
+{% load widget_tweaks %}
+
+{% if user.is_superuser  %}
+	<h3>Nome: {{ user.username }}!</h3>
+	<h3>Escola: {{request.user.last_name}}</h3>
+	<h2>Criar usuário:</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+	{%csrf_token%}
+	<div class="form-group">
+		<label for="{{form.last_name.id_for_label}}">Escola</label>
+		{{form.last_name|add_class:"form-control"|attr:'readonly'}}
+	</div>
+	<div class="form-group">
+		<label for="{{form.username.id_for_label}}">Login (Não utilizar espaços, o nome deve ser unico para cada escola)</label>
+		{{form.username|add_class:"form-control"}}
+	</div>
+	<div class="form-group">
+		<label for="{{form.password.id_for_label}}">Senha</label>
+		{{form.password|add_class:'form-control'|attr:'type = password'}}
+	</div>
+
+	<button type="submit" class="btn btn-success">Criar usuário</button>
+</form>
+{% for u in users %}
+<table class="table" border="2">
+	<tr>
+		<td>{{u.username}}</td>
+		<td>{{u.last_name}}</td>
+		<td><a href="{% url 'del_pessoa' u.id%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+	</tr>
+</table>
+
+{% endfor %}
+{%else%}
+<h1>Você não tem permição para acessar esta página!</h1>
+{% endif %}
+<a  class="btn btn-primary" href="{%url 'home' %}">Voltar a pesquisa</a>
+<a href="{%url 'admin_sistema' %}" class="btn btn-primary" >Voltar ao admin</a>
+{% endblock %}
+{% block footer %}
+<div class="card-footer text-muted" >
+    <footer><center>
+          <p>Desenvolvido por: Jorge Luiz Angioleti&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;contato: jorgescorpionsound@hotmail.com</p>
+    </center></footer>
+</div>
+{% endblock %}

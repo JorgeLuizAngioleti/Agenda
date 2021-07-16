@@ -1,0 +1,48 @@
+{% extends 'meu/base.html' %}
+{% block title %} pesquisa {% endblock%}
+
+{% block main  %}
+	<h1>Pesquisa</h1>
+<form action="{% url 'pesquisa' %}">
+  Data:
+<input type="date" name="data" value="{{data}}" class="form-control" required onchange="this.form.submit()"><br>
+<a  class="btn btn-info" href="{%url 'home' %} ">Voltar </a>
+</form>
+
+{% if nomes %}
+<div class="alert alert-warning" role="alert">
+<center>Lista de tecnologias agendada para esta data:</center>
+</div>
+<table border="2" class="table">
+	<thead class="thead-dark">
+	<tr>
+	<th align="center"  bgcolor="#D8D8D8">Aula</th>
+    <th align="center"  bgcolor="#D8D8D8">Tecnologia</th>
+    <th align="center"  bgcolor="#D8D8D8">Nome</th>
+	</tr>
+	</thead>
+		{% for n in nomes %}
+	<tr>
+		<td>{{n.get_aula_display}}</td><!-- insere o nome do choice -->
+		<td>{{n.eletronico}}</td>
+		<td>{{n.nome}}</td>
+	</tr>
+		{% endfor %}
+</table>
+<br>
+{% else %}
+<div class="alert alert-danger" role="alert">
+<center>Nada agendado para esta data! Selecione outra data acima ou clique em voltar.</center>
+</div>
+
+{% endif %}
+
+
+{% endblock %}
+{% block footer %}
+<div class="card-footer text-muted" >
+    <footer><center>
+          <p>Desenvolvido por: Jorge Luiz Angioleti&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;contato: jorgescorpionsound@hotmail.com</p>
+    </center></footer>
+</div>
+{% endblock %}

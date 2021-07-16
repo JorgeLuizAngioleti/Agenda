@@ -1,0 +1,44 @@
+{% extends 'meu/base.html' %}
+{% block title %} Form_add_user {% endblock%}
+
+{% block main  %}
+
+{% load widget_tweaks %}
+
+{% if user.is_superuser  %}
+	<h3>Nome: {{ user.username }}!</h3>
+	<h3>Escola: {{request.user.last_name}}</h3>
+	<h2>Atualizar dias permitidos de agendamento:</h2>
+{%for form in form%}
+<table class="table" border="2">
+	<tr>
+		<td>Escola: </td>
+		<td>Dias de antecedência: </td>
+		<td>Permição agendar multiplas aulas </td>
+		<td>Atualizar </td>
+	</tr>
+	<tr>
+		<td>{{form.nome}}</td>
+		<td>{{form.dias}}</td>
+		<td>{%if not form.permicao%}<a href="" style="color:#FF0000;">Desativado</a>
+		{%else%}<a href="" style="color:#00FF00;">Ativado</a>{%endif%}</td>
+		<td><a href="{%url 'atualizar_dias' form.id %}">Atualizar</a></td>
+	</tr>
+</table>
+
+
+{%endfor%}
+
+{%else%}
+<h1>Você não tem permição para acessar esta página!</h1>
+{% endif %}
+<a  class="btn btn-primary" href="{%url 'home' %}">Voltar a pesquisa</a>
+<a href="{%url 'admin_sistema' %}" class="btn btn-primary" >Voltar ao admin</a>
+{% endblock %}
+{% block footer %}
+<div class="card-footer text-muted" >
+    <footer><center>
+          <p>Desenvolvido por: Jorge Luiz Angioleti&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;contato: jorgescorpionsound@hotmail.com</p>
+    </center></footer>
+</div>
+{% endblock %}

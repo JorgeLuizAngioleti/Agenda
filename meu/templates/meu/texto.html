@@ -1,0 +1,61 @@
+{% extends 'meu/base.html' %}
+{% block title %} Cadastrar evento {% endblock%}
+{% load widget_tweaks %}
+
+{% block main  %}
+
+{% if user.is_superuser and per_m %}
+<h1>Cadastrar eventos</h1>
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="{{form.escola.id_for_label}}">Escola</label>
+		{{form.escola|add_class:"form-control"|attr:'readonly'}}
+	</div>
+	<div class="form-group">
+		<label for="{{form.data.id_for_label}}">Data</label>
+		{{form.data|add_class:"form-control"}}
+	</div>
+	<div class="form-group">
+		<label for="{{form.titulo.id_for_label}}">titulo</label>
+		{{form.titulo|add_class:"form-control"}}
+	</div>
+	<div class="form-group">
+		<label for="{{form.texto.id_for_label}}">Descrição</label>
+		{{form.texto|add_class:"form-control"}}
+	</div>
+
+	<button type="submit" class="btn btn-success">Cadastrar</button>
+</form>
+<a  class="btn btn-primary" href="{%url 'home' %}">Voltar a pesquisa</a>
+<a href="{%url 'admin_sistema' %}" class="btn btn-primary" >Voltar ao admin</a>
+
+<h4>Pesquise com as datas abaixo</h4>
+<form action="{% url 'mensagem' %}">
+    Data inicial:
+<input type="date" name="data1" value="{{data_inicial}}" class="form-control" ><br>
+	Data final:
+<input type="date" name="data2" value="{{data_final}}" class="form-control" ><br>
+<button type="submit" class="btn btn-success">Pesquisar</button>
+</form>
+<h2>Eventos do admin( por padrão carrega os últimos 30 dias.)</h2>
+{%if eventos %}
+{% for u in eventos %}
+<table class="table table-striped" border="2">
+	<tr>
+		<td>{{u.data}}</td>
+		<td>{{u.titulo}}</td>
+		<td>{{u.texto}}</td>
+		<td><a href="{% url 'del_mensagem' u.id%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+	</tr>
+</table>
+
+{% endfor %}
+{%else%}
+<h3><i class="fa fa-calendar-check-o" aria-hidden="true"></i></i>Sem eventos para estas datas!</h3>
+{%endif%}
+{%else%}
+<h1>Você não tem permição para acessar esta página!</h1>
+{% endif %}
+{% endblock %}
